@@ -11,7 +11,7 @@
 
 ##  Usage:
 ```
-  * node . OR node index.js *
+  * node . OR node main.js *
 ```
 
 ![image](https://github.com/ignshifts/Vanity-Roles/assets/74390871/b6e9413d-8a67-445d-9c29-e2854b70a0a9) Enable Guild Members & Presence Intent
