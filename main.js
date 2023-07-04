@@ -25,8 +25,15 @@ client.on('presenceUpdate', async (_, newPresence) => {
       if (status) {
         if(member.roles.cache.has(role.id)) return;
           member.roles.add(role)
-            .then(() => {
+            .then(async () => {
               console.log(`Assigned ${role.name} to ${member.user.tag}`);
+              const embed = new Discord.MessageEmbed()
+                .setColor('GREEN')
+                .setTitle('**__Role Added__**')
+                .setDescription(`**${member.user.tag}** has been given the role, **${role.name}**`)
+                .setTimestamp()
+
+              await Discord.WebhookClient({ url: config.webhook }).send({ embeds: [embed] }).catch(e => console.error('Unable to send webhook'));
             })
             .catch(error => {
               console.error(`Failed to assign role to ${member.user.tag}`, error);
@@ -34,8 +41,15 @@ client.on('presenceUpdate', async (_, newPresence) => {
       } else {
         if(!member.roles.cache.has(role.id)) return;
         member.roles.remove(role)
-          .then(() => {
+          .then(async () => {
             console.log(`Removed ${role.name} from ${member.user.tag}`);
+            const embed = new Discord.MessageEmbed()
+                .setColor('RED')
+                .setTitle('**__Role Removed__**')
+                .setDescription(`**${member.user.tag}** has been removed from the role, **${role.name}**`)
+                .setTimestamp()
+
+            await Discord.WebhookClient({ url: config.webhook }).send({ embeds: [embed] }).catch(e => console.error('Unable to send webhook'));
           })
           .catch(error => {
             console.error(`Failed to remove role from ${member.user.tag}`, error);
